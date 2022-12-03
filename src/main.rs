@@ -3,5 +3,5 @@
 pub mod day3;
 
 fn main() {
-    let _ = day3::part1();
+    let _ = day3::part2();
 }
