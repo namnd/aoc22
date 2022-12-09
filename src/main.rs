@@ -8,5 +8,5 @@ pub mod day7;
 pub mod day8;
 
 fn main() {
-    let _ = day8::part1();
+    let _ = day8::part2();
 }

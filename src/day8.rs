@@ -68,3 +68,66 @@ pub fn part1() {
     println!("{}", count);
 }
 
+pub fn part2() {
+    let input = aoc22::read_lines_from_file("day8", false).unwrap();
+
+    let mut trees: Vec<Vec<u8>> = Vec::new();
+    for s in input {
+        trees.push(s.as_bytes().iter().map(|x| x - 48).collect());
+    }
+
+    let rows_count = trees.len();
+    let cols_count = trees.get(0).unwrap().len();
+    let mut max = 0;
+
+    for row_index in 1..rows_count - 1 {
+        for col_index in 1..cols_count - 1 {
+            let score = cal_score(row_index, col_index, trees.to_vec());
+            if score > max {
+                max = score;
+            }
+        }
+    }
+
+    println!("{}", max);
+}
+
+fn cal_score(row_index: usize, col_index: usize, trees: Vec<Vec<u8>>) -> i32 {
+    let tree = trees.get(row_index).unwrap().get(col_index).unwrap();
+    let mut left = 0;
+    let mut top = 0;
+    let mut right = 0;
+    let mut bottom = 0;
+    let cols_count = trees.get(0).unwrap().len();
+    let rows_count = trees.len();
+    for i in col_index + 1..cols_count {
+        right += 1;
+        let r = trees.get(row_index).unwrap().get(i).unwrap();
+        if r >= tree {
+            break;
+        }
+    }
+    for i in row_index + 1..rows_count {
+        bottom += 1;
+        let b = trees.get(i).unwrap().get(col_index).unwrap();
+        if b >= tree {
+            break;
+        }
+    }
+
+    for i in 1..col_index + 1 {
+        left += 1;
+        let l = trees.get(row_index).unwrap().get(col_index - i).unwrap();
+        if l >= tree {
+            break;
+        }
+    }
+    for i in 1..row_index + 1 {
+        top += 1;
+        let t = trees.get(row_index - i).unwrap().get(col_index).unwrap();
+        if t >= tree {
+            break;
+        }
+    }
+    left * right * top * bottom
+}
