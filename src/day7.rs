@@ -34,11 +34,15 @@ pub fn part1() {
         }
     }
 
-    let mut total = 0;
-    for (_, size) in dirs {
-        if size <= 100000 {
-            total += size;
+    let mut sorted: Vec<_> = dirs.iter().collect();
+    sorted.sort_by(|&a, &b| a.1.partial_cmp(b.1).unwrap());
+    let root_size = sorted.last().unwrap().1;
+    let to_free = root_size - (70000000 - 30000000);
+
+    for (_, &size) in sorted {
+        if size >= to_free {
+            println!("{}", size);
+            break;
         }
     }
-    println!("{}", total);
 }
