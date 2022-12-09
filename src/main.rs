@@ -4,7 +4,8 @@ pub mod day3;
 pub mod day4;
 pub mod day5;
 pub mod day6;
+pub mod day7;
 
 fn main() {
-    let _ = day6::part1();
+    let _ = day7::part1();
 }
